@@ -20,22 +20,25 @@ public class HomePage {
     @FindBy(xpath = "//a[@class='header__icon header__icon--account link focus-inset small-hide']")
     private WebElement AccountIcon;
 
-    @FindBy(xpath ="//a[@id='cart-icon-bubble']")
+    @FindBy(xpath = "//a[@id='cart-icon-bubble']")
     private WebElement CartIcon;
 
     @FindBy(xpath = "//a[contains(.,'15mm Combo Wrench')]")
     private WebElement ProductName;
-    public HomePage(WebDriver driver){
-        PageFactory.initElements(driver,this);
+
+    public HomePage(WebDriver driver) {
+        PageFactory.initElements(driver, this);
     }
 
-    public void productClick(){
+    public void productClick() {
         ProductName.click();
     }
-    public void addCartIcon(){
+
+    public void addCartIcon() {
         CartIcon.click();
     }
-    public void profileIcon(){
+
+    public void profileIcon() {
         AccountIcon.click();
     }
 }
