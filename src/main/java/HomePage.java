@@ -35,4 +35,7 @@ public class HomePage {
     public void addCartIcon(){
         CartIcon.click();
     }
+    public void profileIcon(){
+        AccountIcon.click();
+    }
 }
