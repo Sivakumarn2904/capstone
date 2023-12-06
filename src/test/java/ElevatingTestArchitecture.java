@@ -10,4 +10,12 @@ public class ElevatingTestArchitecture extends Baseclass {
         new ProductDescriptionPage(driver).addToCart();
         home.addCartIcon();
     }
+
+    @Test
+    public void CentralizeDriverManagement(){
+        DriverFactory driverfactory = new DriverFactory();
+        driverfactory.selectBrowser("chrome");
+        driverfactory.closeBrowser();
+    }
+
 }
