@@ -69,6 +69,8 @@ public class Add_Cart extends Baseclass{
         } else {
             wait.until(ExpectedConditions.elementToBeClickable(element));
             element.click();
+            WebElement productName = driver.findElement(By.xpath("//h1[@class='product__title']"));
+            Assert.assertEquals(Productelements.getText(),productName);
             try{
                 wait.until(ExpectedConditions.alertIsPresent());
             }catch (Exception e){
@@ -77,6 +79,7 @@ public class Add_Cart extends Baseclass{
             WebElement carticon = driver.findElement(By.xpath("//a[@id='cart-icon-bubble']"));
             wait.until(ExpectedConditions.elementToBeClickable(carticon));
             carticon.click();
+
             String ExpectPrice = driver.findElement(By.xpath("//td[@class='cart-item__totals right small-hide']/descendant::span")).getText();
             String ActualPrice=driver.findElement(By.xpath("//h3[text()='Subtotal']/following-sibling::p")).getText();
             String DiscountPrice=driver.findElement(By.xpath("//li[@class='discounts__discount discounts__discount--end']")).getText();
