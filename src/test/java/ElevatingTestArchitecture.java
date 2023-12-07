@@ -1,8 +1,11 @@
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import GenericUtils.Baseclass;
+import GenericUtils.DriverFactory;
+import GenericUtils.JSON;
+import GenericUtils.LogHelper;
+import POMPages.HomePage;
+import POMPages.LoginPage;
+import POMPages.ProductDescriptionPage;
 import org.json.simple.parser.ParseException;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
 
 import java.io.IOException;

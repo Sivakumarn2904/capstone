@@ -1,10 +1,11 @@
+package POMPages;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class HomePage {
-
+public class ProductDescriptionPage {
     @FindBy(xpath = "//span[@class='header__active-menu-item']")
     private WebElement HomeTab;
 
@@ -20,25 +21,21 @@ public class HomePage {
     @FindBy(xpath = "//a[@class='header__icon header__icon--account link focus-inset small-hide']")
     private WebElement AccountIcon;
 
-    @FindBy(xpath = "//a[@id='cart-icon-bubble']")
+    @FindBy(xpath ="//a[@id='cart-icon-bubble']")
     private WebElement CartIcon;
 
-    @FindBy(xpath = "//a[contains(.,'15mm Combo Wrench')]")
-    private WebElement ProductName;
+    @FindBy(xpath = "//button[@name='add']")
+    private WebElement AddtocartButton;
 
-    public HomePage(WebDriver driver) {
-        PageFactory.initElements(driver, this);
+    @FindBy(xpath = "//div[@data-shopify='payment-button']")
+    private WebElement BuynowButton;
+
+
+    public ProductDescriptionPage(WebDriver driver){
+        PageFactory.initElements(driver,this);
     }
 
-    public void productClick() {
-        ProductName.click();
-    }
-
-    public void addCartIcon() {
-        CartIcon.click();
-    }
-
-    public void profileIcon() {
-        AccountIcon.click();
+    public void addToCart(){
+        AddtocartButton.click();
     }
 }
