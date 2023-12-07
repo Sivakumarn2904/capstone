@@ -1,8 +1,11 @@
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.json.simple.parser.ParseException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
+
+import java.io.IOException;
 
 public class ElevatingTestArchitecture extends Baseclass {
     HomePage home;
@@ -45,5 +48,20 @@ public class ElevatingTestArchitecture extends Baseclass {
            LogHelper.logError("An error occurred: " + e.getMessage());
        }
     }
-
+    @Test
+    public void DataDrivenTesting() throws IOException, ParseException {
+        JSON data = new JSON();
+        String Emailid = data.fetchData("emailId");
+        String Password = data.fetchData("password");
+        try {
+            LogHelper.logInfo("Entering the method LoggingMechanism.");
+            home = new HomePage(driver);
+            home.profileIcon();
+            login = new LoginPage(driver);
+            login.LoginAccount(Emailid, Password);
+            LogHelper.logInfo("Exiting the method LoggingMechanism.");
+        }catch (Exception e){
+            LogHelper.logError("An error occurred: " + e.getMessage());
+        }
+    }
 }
