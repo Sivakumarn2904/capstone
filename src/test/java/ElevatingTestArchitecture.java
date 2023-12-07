@@ -34,18 +34,16 @@ public class ElevatingTestArchitecture extends Baseclass {
 
     @Test
     public void LoggingMechanism(){
-        final Logger logger = LogManager.getLogger(ElevatingTestArchitecture.class);
-
-        home = new HomePage(driver);
-        home.profileIcon();
-        login = new LoginPage(driver);
-        login.LoginAccount("siva@gmail.com","Sivakumar");
-        logger.trace("User able to login");
-        logger.debug("This is a DEBUG message.");
-        logger.info("This is an INFO message.");
-        logger.warn("This is a WARN message.");
-        logger.error("This is an ERROR message.");
-        logger.fatal("This is a FATAL message.");
+       try {
+           LogHelper.logInfo("Entering the method LoggingMechanism.");
+           home = new HomePage(driver);
+           home.profileIcon();
+           login = new LoginPage(driver);
+           login.LoginAccount("siva@gmail.com", "Sivakumar");
+           LogHelper.logInfo("Exiting the method LoggingMechanism.");
+       }catch (Exception e){
+           LogHelper.logError("An error occurred: " + e.getMessage());
+       }
     }
 
 }
