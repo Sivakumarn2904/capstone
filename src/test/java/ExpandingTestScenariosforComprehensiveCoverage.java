@@ -9,17 +9,28 @@ import java.util.stream.IntStream;
 
 public class ExpandingTestScenariosforComprehensiveCoverage extends Baseclass{
     CreateAccount account;
+    HomePage home;
+    Random random;
     @Test
     public void verifyUserRegistration() throws InterruptedException {
-        HomePage home=new HomePage(driver);
+
+         home=new HomePage(driver);
          account = new CreateAccount(driver);
         home.profileIcon();
-        Random random = new Random();
+         random = new Random();
         int numbers = random.nextInt(1000);
         driver.findElement(By.xpath("//a[contains(text(),'Create account')]")).click();
         account.createAccount("Siva","Kumar","siva"+numbers+"@gmail.com","Sivakumar");
         home.profileIcon();
         String name = driver.findElement(By.xpath("//p[text()='Siva Kumar']")).getText();
         Assert.assertEquals(name,"Siva Kumar");
+        driver.findElement(By.xpath("//h1[text()='Account']/following-sibling::a")).click();
+        account = new CreateAccount(driver);
+        home.profileIcon();
+        int numbers1 = random.nextInt(1000);
+        driver.findElement(By.xpath("//a[contains(text(),'Create account')]")).click();
+        account.createAccount("","","","");
+        String promtmessgae = driver.findElement(By.xpath("//form[@id='create_customer']/input/following-sibling::h2")).getText();
+        Assert.assertEquals(promtmessgae,"Please adjust the following:");
     }
 }
