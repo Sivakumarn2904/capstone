@@ -56,6 +56,7 @@ public class Add_Cart extends Baseclass {
     public void verifyTheCartDeatials() throws InterruptedException {
 
         WebElement Productelements = driver.findElement(By.xpath("//a[contains(.,'15mm Combo Wrench')]"));
+        String pname = Productelements.getText();
         wait.until(ExpectedConditions.visibilityOf(Productelements));
         Productelements.click();
         WebElement element = driver.findElement(By.xpath("//button[@class='product-form__submit button button--full-width button--secondary']"));
@@ -66,7 +67,7 @@ public class Add_Cart extends Baseclass {
             wait.until(ExpectedConditions.elementToBeClickable(element));
             element.click();
             WebElement productName = driver.findElement(By.xpath("//h1[@class='product__title']"));
-            Assert.assertEquals(Productelements.getText(),productName);
+            Assert.assertEquals(pname,productName.getText());
             try{
                 wait.until(ExpectedConditions.alertIsPresent());
             }catch (Exception e){

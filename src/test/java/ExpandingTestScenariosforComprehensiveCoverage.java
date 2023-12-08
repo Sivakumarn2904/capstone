@@ -1,26 +1,32 @@
 import GenericUtils.Baseclass;
-import POMPages.CreateAccount;
-import POMPages.HomePage;
-import POMPages.SearchContext;
+import GenericUtils.JSON;
+import GenericUtils.LogHelper;
+import POMPages.*;
+import org.json.simple.parser.ParseException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 import java.util.SortedMap;
 
 public class ExpandingTestScenariosforComprehensiveCoverage extends Baseclass {
     CreateAccount account;
-    HomePage home;
+
+    AddCartPopUp addtocart;
+    CartPage cart;
     Random random;
     SearchContext search;
+    ProductDescriptionPage pd;
     @Test
     public void verifyUserRegistration() throws InterruptedException {
 
-         home=new HomePage(driver);
+        HomePage home=new HomePage(driver);
          account = new CreateAccount(driver);
         home.profileIcon();
          random = new Random();
@@ -41,7 +47,7 @@ public class ExpandingTestScenariosforComprehensiveCoverage extends Baseclass {
     }
 
     @Test
-    public void ProductSearchandFiltering() throws InterruptedException {
+    public void ProductSearchnadFiltering() throws InterruptedException {
 
         search= new SearchContext(driver);
         search.Search("Bags");
@@ -55,5 +61,67 @@ public class ExpandingTestScenariosforComprehensiveCoverage extends Baseclass {
         }
         int pCount = search.ProductCount();
         Assert.assertEquals(number,pCount);
+    }
+    @Test
+    public void CartandCheckoutProcess() throws InterruptedException, IOException, ParseException {
+        WebElement Productelements = driver.findElement(By.xpath("//a[contains(.,'15mm Combo Wrench')]"));
+        wait.until(ExpectedConditions.visibilityOf(Productelements));
+        Productelements.click();
+        WebElement element = driver.findElement(By.xpath("//button[@class='product-form__submit button button--full-width button--secondary']"));
+        String soldoutElement = element.getText();
+        if (soldoutElement.contains("Sold out")){
+            System.out.println("This product is Sold out");
+        }else {
+            element.click();
+            Thread.sleep(3000);
+            WebElement promtMessage = driver.findElement(By.xpath("//div[@class='cart-notification__header']"));
+            Assert.assertEquals(promtMessage.getText(),"Item added to your cart");
+            Thread.sleep(3000);
+            String cartCount = driver.findElement(By.xpath("//a[@id='cart-notification-button']")).getText();
+            Assert.assertEquals(cartCount,"View my cart (1)");
+             addtocart = new AddCartPopUp(driver);
+            addtocart.countinueShopping();
+            HomePage home=new HomePage(driver);
+            home.addCartIcon();
+            cart=new CartPage(driver);
+            cart.countinueShopping();
+            driver.findElement(By.xpath("//a[normalize-space()='16 Ti Skis']")).click();
+             pd = new ProductDescriptionPage(driver);
+             pd.addToCart();
+            addtocart.ViewMyCart();
+            List<WebElement> ActualAmount = driver.findElements(By.xpath("//td[@class='cart-item__totals right small-hide']/descendant::span"));
+            double actnu=0;
+            for (WebElement price:ActualAmount) {
+
+                    String Actualprice = price.getText();
+                    String[] act = Actualprice.split(" ");
+                     actnu+= Double.parseDouble(act[1]);
+            }
+            String ExpAmount = driver.findElement(By.xpath("//h3[text()='Subtotal']/following-sibling::p")).getText();
+            String DiscountAmount=driver.findElement(By.xpath("//li[@class='discounts__discount discounts__discount--end']")).getText();
+
+            String[] exp = ExpAmount.split(" ");
+            double expnu = Double.parseDouble(exp[1]);
+            double dis = actnu - expnu;
+            String discountprice = String.valueOf(dis);
+            Assert.assertTrue(DiscountAmount.contains(discountprice));
+            WebElement checkoutButton = driver.findElement(By.xpath("//button[@id='checkout']"));
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);",checkoutButton);
+            Thread.sleep(3000);
+            checkoutButton.click();
+            Thread.sleep(5000);
+            JSON data = new JSON();
+            String Emailid = data.fetchData("emailId");
+            String Password = data.fetchData("password");
+            try {
+                LogHelper.logInfo("Entering the method LoggingMechanism.");
+                LoginPage login = new LoginPage(driver);
+                login.LoginAccount(Emailid, Password);
+                LogHelper.logInfo("Exiting the method LoggingMechanism.");
+            }catch (Exception e){
+                LogHelper.logError("An error occurred: " + e.getMessage());
+            }
+            Thread.sleep(5000);
+        }
     }
 }
