@@ -27,9 +27,21 @@ public class AccountPage {
 
     @FindBy(xpath = "//li[@data-address][1]/child::p")
     private WebElement UpdateElement;
+
+    @FindBy(xpath = "//td[@id='RowOrder']/a")
+    private WebElement OrderId;
+
+    @FindBy(xpath = "//h2[text()='Order #1074']")
+    private WebElement OrderDetailsId;
+
+    @FindBy(xpath = "//td[@data-label='Total']")
+    private WebElement TotalPrice;
+
+    @FindBy(xpath = "//tfoot/descendant::td[@data-label='Total']")
+    private WebElement DeatiasTotalPrice;
+
     public AccountPage(WebDriver driver){
-        PageFactory.initElements(driver,this
-        );
+        PageFactory.initElements(driver,this);
     }
 
     public WebElement viewAddress(){
@@ -50,5 +62,16 @@ public class AccountPage {
     public String getupdatedetails(){
         return  UpdateElement.getText();
     }
-
+    public WebElement getOrderIdElement(){
+        return OrderId;
+    }
+    public WebElement getOrderDetailsIdElement(){
+        return OrderDetailsId;
+    }
+    public String getTotalPrice(){
+        return TotalPrice.getText();
+    }
+    public String getDeatialsTotalPrice(){
+        return DeatiasTotalPrice.getText();
+    }
 }

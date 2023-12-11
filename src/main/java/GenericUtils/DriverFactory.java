@@ -7,17 +7,17 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 
 public class DriverFactory {
 WebDriver driver;
-    public WebDriver selectBrowser(String browser)
-    {
+
+    public WebDriver selectBrowser(String browser) {
         switch (browser) {
             case "chrome":
-                driver=new ChromeDriver();
+                driver = new ChromeDriver();
                 break;
             case "firefox":
-                driver=new FirefoxDriver();
+                driver = new FirefoxDriver();
                 break;
             case "edge":
-                driver=new InternetExplorerDriver();
+                driver = new InternetExplorerDriver();
                 break;
 
             default:
@@ -26,7 +26,8 @@ WebDriver driver;
         }
         return driver;
     }
-    public WebDriver closeBrowser(){
+
+    public WebDriver closeBrowser() {
         driver.quit();
         return driver;
     }
