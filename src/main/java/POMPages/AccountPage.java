@@ -40,6 +40,12 @@ public class AccountPage {
     @FindBy(xpath = "//tfoot/descendant::td[@data-label='Total']")
     private WebElement DeatiasTotalPrice;
 
+    @FindBy(xpath = "//td[@headers='RowOrder ColumnDate']")
+    private WebElement DateandTime;
+
+    @FindBy(xpath = "//time")
+    private WebElement DetailsDateandTime;
+
     public AccountPage(WebDriver driver){
         PageFactory.initElements(driver,this);
     }
@@ -73,5 +79,11 @@ public class AccountPage {
     }
     public String getDeatialsTotalPrice(){
         return DeatiasTotalPrice.getText();
+    }
+    public String getDataandTime(){
+        return DateandTime.getText();
+    }
+    public String getDetailsDataandTime(){
+        return DetailsDateandTime.getText();
     }
 }

@@ -183,12 +183,13 @@ public class ExpandingTestScenariosforComprehensiveCoverage extends Baseclass {
         Thread.sleep(30000);
         String orderId = account.getOrderIdElement().getText();
         String Totalprice = account.getTotalPrice();
+        String DataandTime = account.getDataandTime();
         wait.until(ExpectedConditions.elementToBeClickable(account.getOrderIdElement()));
         account.getOrderIdElement().click();
         String OrderDetailsId=account.getOrderDetailsIdElement().getText();
         wait.until(ExpectedConditions.visibilityOf(account.getOrderDetailsIdElement()));
         Assert.assertTrue(OrderDetailsId.contains(orderId));
         Assert.assertEquals(Totalprice,account.getDeatialsTotalPrice());
-
+        Assert.assertTrue(account.getDetailsDataandTime().contains(DataandTime));
     }
 }
