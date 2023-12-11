@@ -158,4 +158,17 @@ public class ExpandingTestScenariosforComprehensiveCoverage extends Baseclass {
             element.click();
         }
     }
+
+    @Test
+    public void ForgotPassword() throws IOException, ParseException {
+        home.profileIcon();
+        login.forgotpassword();
+        JSON data = new JSON();
+        String Emailid = data.fetchData("emailId");
+        reset.emailId(Emailid);
+        reset.submitButton();
+        String errormessage = login.getErrorMessage().getText();
+        Assert.assertEquals(errormessage,errormessage.contains("We've sent you an email with a link to update your password"));
+
+    }
 }

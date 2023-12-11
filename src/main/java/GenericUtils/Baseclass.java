@@ -26,6 +26,8 @@ public class Baseclass {
 
     protected CreateAccount Caccount;
 
+    protected RestYourPasswordPage reset;
+
     public WebDriver selectBrowser(String browser)
     {
         switch (browser) {
@@ -63,6 +65,7 @@ public class Baseclass {
         login=new LoginPage(driver);
          account = new AccountPage(driver);
         Caccount = new CreateAccount(driver);
+         reset = new RestYourPasswordPage(driver);
 
     }
     @AfterMethod

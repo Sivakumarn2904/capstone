@@ -20,6 +20,12 @@ public class LoginPage {
     @FindBy(xpath = "//button[contains(text(),'Sign in')]")
     private WebElement LoginButton;
 
+    @FindBy(xpath = "//a[contains(text(),'Forgot your password?')]")
+    private WebElement Forgotpassword;
+
+    @FindBy(xpath = "//h3[@class='form__message']")
+    private WebElement ErrorMessage;
+
     public LoginPage(WebDriver driver){
         PageFactory.initElements(driver,this);
     }
@@ -28,5 +34,11 @@ public class LoginPage {
         Emailid.sendKeys(emailId);
         Password.sendKeys(password);
         LoginButton.click();
+    }
+    public void forgotpassword(){
+        Forgotpassword.click();
+    }
+    public WebElement getErrorMessage(){
+        return ErrorMessage;
     }
 }
