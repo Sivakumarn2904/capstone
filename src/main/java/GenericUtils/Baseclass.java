@@ -1,6 +1,6 @@
 package GenericUtils;
 
-import POMPages.AddCartPopUp;
+import POMPages.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -14,6 +14,17 @@ import java.time.Duration;
 public class Baseclass {
     protected WebDriver driver;
     protected WebDriverWait wait;
+
+    protected HomePage home;
+    protected ProductDescriptionPage pd;
+
+    protected AddCartPopUp addtocartpopup;
+
+    protected LoginPage login;
+
+    protected AccountPage account;
+
+    protected CreateAccount Caccount;
 
     public WebDriver selectBrowser(String browser)
     {
@@ -46,6 +57,13 @@ public class Baseclass {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.get("https://web-playground.ultralesson.com/");
          wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+         home = new HomePage(driver);
+        pd=new ProductDescriptionPage(driver);
+        addtocartpopup=new AddCartPopUp(driver);
+        login=new LoginPage(driver);
+         account = new AccountPage(driver);
+        Caccount = new CreateAccount(driver);
+
     }
     @AfterMethod
     public void close(){

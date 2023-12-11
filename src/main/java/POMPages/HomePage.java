@@ -27,20 +27,36 @@ public class HomePage {
 
     @FindBy(xpath = "//a[contains(.,'15mm Combo Wrench')]")
     private WebElement ProductName;
+    @FindBy(xpath = "//a[contains(.,'12 Ti Xelium Skis')]")
+    private WebElement FirstProductName;
 
+    @FindBy(xpath = "//a[contains(.,'15mm Combo Wrench')]")
+    private WebElement SecondProductName;
     public HomePage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
 
     public void productClick() {
+
         ProductName.click();
     }
 
     public void addCartIcon() {
         CartIcon.click();
     }
+    public WebElement addCartIconelement() {
+        return CartIcon;
+    }
 
     public void profileIcon() {
         AccountIcon.click();
+    }
+    public String FirstProduct() {
+        String fpname=FirstProductName.getText();
+        FirstProductName.click();
+        return fpname;
+    }
+    public WebElement Secondproduct() {
+       return SecondProductName;
     }
 }

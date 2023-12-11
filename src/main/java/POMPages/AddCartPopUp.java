@@ -19,6 +19,9 @@ public class AddCartPopUp {
     @FindBy(xpath = "//h3[@class='cart-notification-product__name h4']")
     private WebElement productName;
 
+    @FindBy(xpath = "//div[@class='cart-notification__header']")
+    private WebElement successmessage;
+
     public AddCartPopUp(WebDriver driver){
         PageFactory.initElements(driver,this);
     }
@@ -28,6 +31,12 @@ public class AddCartPopUp {
     }
     public void ViewMyCart(){
         AddCart.click();
+    }
+    public String Successmessage(){
+        return successmessage.getText();
+    }
+    public String cartnotification(){
+        return AddCart.getText();
     }
 
 }

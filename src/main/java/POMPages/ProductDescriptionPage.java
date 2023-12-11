@@ -30,6 +30,14 @@ public class ProductDescriptionPage {
     @FindBy(xpath = "//div[@data-shopify='payment-button']")
     private WebElement BuynowButton;
 
+    @FindBy(xpath = "//h1[contains(.,'12 Ti Xelium Skis')]")
+    private WebElement Productname;
+
+    @FindBy(xpath = "//button[@class='product-form__submit button button--full-width button--secondary']")
+    private WebElement SoldOrCart;
+    @FindBy(xpath = "//h1[@class='product__title']")
+    private WebElement productTitle;
+
 
     public ProductDescriptionPage(WebDriver driver){
         PageFactory.initElements(driver,this);
@@ -37,5 +45,14 @@ public class ProductDescriptionPage {
 
     public void addToCart(){
         AddtocartButton.click();
+    }
+    public String getProductname() throws InterruptedException  {
+        return Productname.getText();
+    }
+    public WebElement SoldOrCart() {
+         return SoldOrCart;
+    }
+    public WebElement getProductTitle() {
+        return productTitle;
     }
 }

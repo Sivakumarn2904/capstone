@@ -16,7 +16,7 @@ import java.util.Random;
 import java.util.SortedMap;
 
 public class ExpandingTestScenariosforComprehensiveCoverage extends Baseclass {
-    CreateAccount account;
+    CreateAccount Caccount;
 
     AddCartPopUp addtocart;
     CartPage cart;
@@ -26,22 +26,21 @@ public class ExpandingTestScenariosforComprehensiveCoverage extends Baseclass {
     @Test
     public void verifyUserRegistration() throws InterruptedException {
 
-        HomePage home=new HomePage(driver);
-         account = new CreateAccount(driver);
+//        HomePage home=new HomePage(driver);
         home.profileIcon();
          random = new Random();
         int numbers = random.nextInt(1000);
         driver.findElement(By.xpath("//a[contains(text(),'Create account')]")).click();
-        account.createAccount("Siva","Kumar","siva"+numbers+"@gmail.com","Sivakumar");
+        Caccount.createAccount("Siva","Kumar","siva"+numbers+"@gmail.com","Sivakumar");
         home.profileIcon();
         String name = driver.findElement(By.xpath("//p[text()='Siva Kumar']")).getText();
         Assert.assertEquals(name,"Siva Kumar");
         driver.findElement(By.xpath("//h1[text()='Account']/following-sibling::a")).click();
-        account = new CreateAccount(driver);
+        Caccount = new CreateAccount(driver);
         home.profileIcon();
         int numbers1 = random.nextInt(1000);
         driver.findElement(By.xpath("//a[contains(text(),'Create account')]")).click();
-        account.createAccount("","","","");
+        Caccount.createAccount("","","","");
         String promtmessgae = driver.findElement(By.xpath("//form[@id='create_customer']/input/following-sibling::h2")).getText();
         Assert.assertEquals(promtmessgae,"Please adjust the following:");
     }
@@ -88,6 +87,7 @@ public class ExpandingTestScenariosforComprehensiveCoverage extends Baseclass {
             driver.findElement(By.xpath("//a[normalize-space()='16 Ti Skis']")).click();
              pd = new ProductDescriptionPage(driver);
              pd.addToCart();
+             Thread.sleep(2000);
             addtocart.ViewMyCart();
             List<WebElement> ActualAmount = driver.findElements(By.xpath("//td[@class='cart-item__totals right small-hide']/descendant::span"));
             double actnu=0;
@@ -121,7 +121,26 @@ public class ExpandingTestScenariosforComprehensiveCoverage extends Baseclass {
             }catch (Exception e){
                 LogHelper.logError("An error occurred: " + e.getMessage());
             }
-            Thread.sleep(5000);
         }
+    }
+
+    @Test
+    public void profileUpdate() throws IOException, ParseException, InterruptedException {
+        home.profileIcon();
+        JSON data = new JSON();
+        String Emailid = data.fetchData("emailId");
+        String Password = data.fetchData("password");
+        login.LoginAccount(Emailid,Password);
+        Thread.sleep(30000);
+        account.viewAddress().click();
+        account.editButton();
+        String Firstname = data.fetchData("firstName");
+        String Lastname=data.fetchData("lastName");
+        String Company=data.fetchData("company");
+        account.editAddress(Firstname,Lastname,Company);
+        account.updateButton();
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);",account.updateButton());
+        Assert.assertEquals(Firstname+" "+Lastname,account.getupdatedetails().contains(Firstname+" "+Lastname));
+
     }
 }

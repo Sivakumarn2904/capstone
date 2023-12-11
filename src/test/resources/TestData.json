@@ -1,4 +1,8 @@
 {
   "emailId": "siva@gmail.com",
-  "password": "Sivakumar"
+  "password": "Sivakumar",
+  "firstName": "Siva",
+  "lastName": "Kumar",
+  "company": "TestVagrant"
+
 }
