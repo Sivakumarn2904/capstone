@@ -180,7 +180,7 @@ public class ExpandingTestScenariosforComprehensiveCoverage extends Baseclass {
         String Emailid = data.fetchData("emailId");
         String Password = data.fetchData("password");
         login.LoginAccount(Emailid,Password);
-        Thread.sleep(30000);
+
         String orderId = account.getOrderIdElement().getText();
         String Totalprice = account.getTotalPrice();
         String DataandTime = account.getDataandTime();
