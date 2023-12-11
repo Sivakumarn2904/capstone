@@ -141,6 +141,21 @@ public class ExpandingTestScenariosforComprehensiveCoverage extends Baseclass {
         account.updateButton();
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);",account.updateButton());
         Assert.assertEquals(Firstname+" "+Lastname,account.getupdatedetails().contains(Firstname+" "+Lastname));
+    }
 
+    @Test
+    public void OutofStockProducts() throws InterruptedException {
+        home.FirstProduct();
+//        WebElement Productelements = driver.findElement(By.xpath("//a[contains(.,'12 Ti Xelium Skis')]"));
+//        wait.until(ExpectedConditions.visibilityOf(Productelements));
+//        Productelements.click();
+        WebElement element = pd.SoldOrCart();
+//        WebElement element = driver.findElement(By.xpath("//button[@class='product-form__submit button button--full-width button--secondary']"));
+        String soldoutElement = element.getText();
+        if (soldoutElement.contains("Sold out")) {
+            System.out.println("This product is Sold out");
+        } else {
+            element.click();
+        }
     }
 }
