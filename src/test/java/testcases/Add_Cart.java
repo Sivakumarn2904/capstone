@@ -21,6 +21,22 @@ public class Add_Cart extends Baseclass {
         Assert.assertEquals(product,pdpname);
     }
     @Test
+    public void verifyProductAvailability() throws InterruptedException {
+        home.FirstProduct();
+//        WebElement Productelements = driver.findElement(By.xpath("//a[contains(.,'12 Ti Xelium Skis')]"));
+//        wait.until(ExpectedConditions.visibilityOf(Productelements));
+//        Productelements.click();
+        WebElement element=pd.SoldOrCart();
+//        WebElement element = driver.findElement(By.xpath("//button[@class='product-form__submit button button--full-width button--secondary']"));
+        String soldoutElement = element.getText();
+        if (soldoutElement.contains("Sold out")){
+            System.out.println("This product is Sold out");
+        }else {
+            element.click();
+        }
+    }
+
+    @Test
     public void verifyTheProductIsAdded() throws InterruptedException {
         WebElement Sname = home.Secondproduct();
 //        WebElement Productelements = driver.findElement(By.xpath("//a[contains(.,'15mm Combo Wrench')]"));
@@ -37,28 +53,13 @@ public class Add_Cart extends Baseclass {
             Thread.sleep(3000);
             String Successmessage = addtocartpopup.Successmessage();
             //WebElement promtMessage = driver.findElement(By.xpath("//div[@class='cart-notification__header']"));
-            Assert.assertEquals(Successmessage,"Item added to your cart");
+            Assert.assertEquals(Successmessage,"Item added to your cart"); // this is the code for validating items added to your cart
             Thread.sleep(3000);
             //String cartCount = driver.findElement(By.xpath("//a[@id='cart-notification-button']")).getText();
             Assert.assertEquals(addtocartpopup.cartnotification(),"View my cart (1)");
         }
     }
 
-    @Test
-    public void verifyProductAvailability() throws InterruptedException {
-        home.FirstProduct();
-//        WebElement Productelements = driver.findElement(By.xpath("//a[contains(.,'12 Ti Xelium Skis')]"));
-//        wait.until(ExpectedConditions.visibilityOf(Productelements));
-//        Productelements.click();
-        WebElement element=pd.SoldOrCart();
-//        WebElement element = driver.findElement(By.xpath("//button[@class='product-form__submit button button--full-width button--secondary']"));
-        String soldoutElement = element.getText();
-        if (soldoutElement.contains("Sold out")){
-            System.out.println("This product is Sold out");
-        }else {
-            element.click();
-        }
-    }
 
     @Test
     public void verifyTheCartDeatials() throws InterruptedException {

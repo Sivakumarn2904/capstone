@@ -22,10 +22,6 @@ dependencies {
 
 test {
    useTestNG(){
-//       options {
-//           suites '/Users/testvagrant/IdeaProjects/Capstone/src/test/testng.xml'
-//           setParallel('tests')
-//           setThreadCount(2)
-//       }
+
    }
 }
