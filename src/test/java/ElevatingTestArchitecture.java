@@ -11,13 +11,10 @@ import org.testng.annotations.Test;
 import java.io.IOException;
 
 public class ElevatingTestArchitecture extends Baseclass {
-    HomePage home;
-    LoginPage login;
     @Test
     public void addCart(){
-         home = new HomePage(driver);
         home.productClick();
-        new ProductDescriptionPage(driver).addToCart();
+       pd.addToCart();
         home.addCartIcon();
     }
 
@@ -31,9 +28,7 @@ public class ElevatingTestArchitecture extends Baseclass {
     @Test
     public void ActionClassesforTestSteps() throws InterruptedException {
 
-        home = new HomePage(driver);
         home.profileIcon();
-        login = new LoginPage(driver);
         login.LoginAccount("siva@gmail.com","Sivakumar");
 
     }
@@ -53,14 +48,11 @@ public class ElevatingTestArchitecture extends Baseclass {
     }
     @Test
     public void DataDrivenTesting() throws IOException, ParseException {
-        JSON data = new JSON();
         String Emailid = data.fetchData("emailId");
         String Password = data.fetchData("password");
         try {
             LogHelper.logInfo("Entering the method LoggingMechanism.");
-            home = new HomePage(driver);
             home.profileIcon();
-            login = new LoginPage(driver);
             login.LoginAccount(Emailid, Password);
             LogHelper.logInfo("Exiting the method LoggingMechanism.");
         }catch (Exception e){

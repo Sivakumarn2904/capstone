@@ -16,13 +16,8 @@ import java.util.Random;
 import java.util.SortedMap;
 
 public class ExpandingTestScenariosforComprehensiveCoverage extends Baseclass {
-    CreateAccount Caccount;
 
-    AddCartPopUp addtocart;
-    CartPage cart;
     Random random;
-    SearchContext search;
-    ProductDescriptionPage pd;
 
     @Test
     public void verifyUserRegistration() throws InterruptedException {
@@ -47,10 +42,14 @@ public class ExpandingTestScenariosforComprehensiveCoverage extends Baseclass {
     }
 
     @Test
-    public void ProductSearchnadFiltering() throws InterruptedException {
+    public void ProductSearchnadFiltering() throws InterruptedException, IOException, ParseException {
 
-        search = new SearchContext(driver);
-        search.Search("Bags");
+
+        search.Search(data.fetchData("productName"));
+        wait.until(ExpectedConditions.elementToBeClickable(search.getProducttype()));
+        search.getProducttype().click();
+        wait.until(ExpectedConditions.elementToBeClickable(search.getSelect1producttype()));
+        search.getSelect1producttype().click();
         ((JavascriptExecutor) driver).executeScript("document.body.click();");
         String PName = search.SearchText();
         int number = 0;
@@ -80,17 +79,14 @@ public class ExpandingTestScenariosforComprehensiveCoverage extends Baseclass {
             Thread.sleep(3000);
             String cartCount = driver.findElement(By.xpath("//a[@id='cart-notification-button']")).getText();
             Assert.assertEquals(cartCount, "View my cart (1)");
-            addtocart = new AddCartPopUp(driver);
-            addtocart.countinueShopping();
-            HomePage home = new HomePage(driver);
+            addtocartpopup.countinueShopping();
             home.addCartIcon();
-            cart = new CartPage(driver);
+
             cart.countinueShopping();
             driver.findElement(By.xpath("//a[normalize-space()='16 Ti Skis']")).click();
-            pd = new ProductDescriptionPage(driver);
             pd.addToCart();
             Thread.sleep(2000);
-            addtocart.ViewMyCart();
+            addtocartpopup.ViewMyCart();
             List<WebElement> ActualAmount = driver.findElements(By.xpath("//td[@class='cart-item__totals right small-hide']/descendant::span"));
             double actnu = 0;
             for (WebElement price : ActualAmount) {
@@ -109,10 +105,9 @@ public class ExpandingTestScenariosforComprehensiveCoverage extends Baseclass {
             Assert.assertTrue(DiscountAmount.contains(discountprice));
             WebElement checkoutButton = driver.findElement(By.xpath("//button[@id='checkout']"));
             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", checkoutButton);
-            Thread.sleep(3000);
+            wait.until(ExpectedConditions.elementToBeClickable(checkoutButton));
             checkoutButton.click();
-            Thread.sleep(5000);
-            JSON data = new JSON();
+
             String Emailid = data.fetchData("emailId");
             String Password = data.fetchData("password");
             try {
@@ -129,7 +124,6 @@ public class ExpandingTestScenariosforComprehensiveCoverage extends Baseclass {
     @Test
     public void profileUpdate() throws IOException, ParseException, InterruptedException {
         home.profileIcon();
-        JSON data = new JSON();
         String Emailid = data.fetchData("emailId");
         String Password = data.fetchData("password");
         login.LoginAccount(Emailid, Password);
@@ -165,18 +159,16 @@ public class ExpandingTestScenariosforComprehensiveCoverage extends Baseclass {
     public void ForgotPassword() throws IOException, ParseException {
         home.profileIcon();
         login.forgotpassword();
-        JSON data = new JSON();
         String Emailid = data.fetchData("emailId");
         reset.emailId(Emailid);
         reset.submitButton();
         String errormessage = login.getErrorMessage().getText();
-        Assert.assertEquals(errormessage, errormessage.contains("We've sent you an email with a link to update your password"));
+        Assert.assertTrue(errormessage.contains("We've sent you an email with a link to update your password"));
     }
 
     @Test
     public void OrderHistoryandDetailsAccuracy() throws IOException, ParseException, InterruptedException {
         home.profileIcon();
-        JSON data = new JSON();
         String Emailid = data.fetchData("emailId");
         String Password = data.fetchData("password");
         login.LoginAccount(Emailid,Password);
@@ -191,5 +183,12 @@ public class ExpandingTestScenariosforComprehensiveCoverage extends Baseclass {
         Assert.assertTrue(OrderDetailsId.contains(orderId));
         Assert.assertEquals(Totalprice,account.getDeatialsTotalPrice());
         Assert.assertTrue(account.getDetailsDataandTime().contains(DataandTime));
+    }
+
+    @Test
+    public void SearchFunctionalitywithSpecialCharacters() throws IOException, ParseException, InterruptedException {//    %$^%$^$%QW$
+
+        search.Search(data.fetchData("specialCharacterPname"));
+        Assert.assertTrue(search.getErrorMessage().isDisplayed());
     }
 }

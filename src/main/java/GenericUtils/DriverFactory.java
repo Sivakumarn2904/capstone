@@ -27,9 +27,9 @@ WebDriver driver;
         return driver;
     }
 
-    public WebDriver closeBrowser() {
+    public void closeBrowser() {
         driver.quit();
-        return driver;
+       // return driver;
     }
 
 }

@@ -28,19 +28,24 @@ public class SearchContext {
     @FindBy(xpath = "//div[@class='card-wrapper']")
     public List<WebElement> Productcount;
 
+    @FindBy(xpath = "//p[@role='status']")
+    public WebElement SearchErrorMessage;
+
     public SearchContext(WebDriver driver){
         PageFactory.initElements(driver,this);
     }
 
-    public void Search(String Product) throws InterruptedException {
+    public void Search(String Productname) {
         SearchIcon.click();
-        SearchField.sendKeys(Product);
+        SearchField.sendKeys(Productname);
         SearchButton.click();
-        Thread.sleep(2000);
-        Producttype.click();
-        Select1product.click();
-        Thread.sleep(2000);
 
+    }
+    public WebElement getProducttype(){
+        return Producttype;
+    }
+    public WebElement getSelect1producttype(){
+        return Select1product;
     }
     public String SearchText(){
         String productName = Select1product.getText();
@@ -50,5 +55,7 @@ public class SearchContext {
     public int ProductCount(){
        return Productcount.size();
     }
-
+    public WebElement getErrorMessage(){
+        return SearchErrorMessage;
+    }
 }

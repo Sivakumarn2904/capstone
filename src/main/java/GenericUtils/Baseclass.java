@@ -27,6 +27,9 @@ public class Baseclass {
     protected CreateAccount Caccount;
 
     protected RestYourPasswordPage reset;
+    protected CartPage cart;
+    protected SearchContext search;
+    protected JSON data;
 
     public WebDriver selectBrowser(String browser) {
         switch (browser) {
@@ -54,7 +57,8 @@ public class Baseclass {
 
     @BeforeMethod
     public void launch() {
-        driver = selectBrowser("chrome");
+        driver=new DriverFactory().selectBrowser("chrome");
+  //      driver = selectBrowser("");
 //         driver=new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
@@ -67,12 +71,14 @@ public class Baseclass {
         account = new AccountPage(driver);
         Caccount = new CreateAccount(driver);
         reset = new RestYourPasswordPage(driver);
+        cart = new CartPage(driver);
+        search = new SearchContext(driver);
+         data = new JSON();
 
     }
 
     @AfterMethod
     public void close() {
-        closeBrowser();
-        //driver.quit();
+      driver.quit();
     }
 }
