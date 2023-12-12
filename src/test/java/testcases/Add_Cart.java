@@ -1,4 +1,7 @@
+package testcases;
+
 import GenericUtils.Baseclass;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -9,7 +12,7 @@ public class Add_Cart extends Baseclass {
 
     @Test
     public void velidateProductDeatialsPage() throws InterruptedException {
-       String product =home.FirstProduct();
+        String product =home.FirstProduct();
        // WebElement product = driver.findElement(By.xpath("//a[contains(.,'12 Ti Xelium Skis')]"));
         //String plpProductName = product.getText();
        // product.click();
@@ -21,7 +24,7 @@ public class Add_Cart extends Baseclass {
     public void verifyTheProductIsAdded() throws InterruptedException {
         WebElement Sname = home.Secondproduct();
 //        WebElement Productelements = driver.findElement(By.xpath("//a[contains(.,'15mm Combo Wrench')]"));
-        wait.until(ExpectedConditions.visibilityOf(Sname));
+        wait.until(ExpectedConditions.elementToBeClickable(Sname));
         Sname.click();
         WebElement SoldOrCartbutton = pd.SoldOrCart();
         String soldoutElement=SoldOrCartbutton.getText();

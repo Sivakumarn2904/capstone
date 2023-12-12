@@ -1,5 +1,6 @@
+package testcases;
+
 import GenericUtils.Baseclass;
-import GenericUtils.JSON;
 import GenericUtils.LogHelper;
 import POMPages.*;
 import org.json.simple.parser.ParseException;
@@ -13,7 +14,6 @@ import org.testng.annotations.Test;
 import java.io.IOException;
 import java.util.List;
 import java.util.Random;
-import java.util.SortedMap;
 
 public class ExpandingTestScenariosforComprehensiveCoverage extends Baseclass {
 
