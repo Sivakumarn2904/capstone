@@ -46,6 +46,9 @@ public class AccountPage {
     @FindBy(xpath = "//time")
     private WebElement DetailsDateandTime;
 
+    @FindBy(xpath = "//h2[text()='Order history']")
+    private WebElement Title;
+
     public AccountPage(WebDriver driver){
         PageFactory.initElements(driver,this);
     }
@@ -85,5 +88,8 @@ public class AccountPage {
     }
     public String getDetailsDataandTime(){
         return DetailsDateandTime.getText();
+    }
+    public WebElement getTitile(){
+        return Title;
     }
 }
