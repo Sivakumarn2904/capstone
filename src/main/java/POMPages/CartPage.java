@@ -27,6 +27,12 @@ public class CartPage {
     @FindBy(xpath = "//input[@class='quantity__input']")
     private WebElement ProductQuantity;
 
+    @FindBy(xpath = "//*[name()='svg' and @class='icon icon-remove']")
+    private WebElement ProductDeleteIcon;
+
+    @FindBy(xpath = "//h1[@class='cart__empty-text']")
+    private WebElement EmptyText;
+
     public CartPage(WebDriver driver){
         PageFactory.initElements(driver,this);
     }
@@ -51,6 +57,12 @@ public class CartPage {
     }
     public WebElement getProductQuantity(){
         return ProductQuantity;
+    }
+    public void ProductDelete() {
+        ProductDeleteIcon.click();
+    }
+    public WebElement getEmptyText() {
+       return EmptyText;
     }
 
 }

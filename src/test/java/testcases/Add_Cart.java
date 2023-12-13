@@ -49,7 +49,7 @@ public class Add_Cart extends Baseclass {
 
 
     @Test
-    public void verifyTheCartDeatials() throws InterruptedException {
+    public void verifyTheCartDetails() {
 
         WebElement  Productelements= home.Secondproduct();
         String pname = Productelements.getText();
@@ -88,26 +88,22 @@ public class Add_Cart extends Baseclass {
 
     @Test
     public void verifyTheProductRemoveFromCart() throws InterruptedException {
-        WebElement Productelements = driver.findElement(By.xpath("//a[contains(.,'15mm Combo Wrench')]"));
+        WebElement Productelements =home.Secondproduct();
         wait.until(ExpectedConditions.visibilityOf(Productelements));
         Productelements.click();
-        WebElement element = driver.findElement(By.xpath("//button[@class='product-form__submit button button--full-width button--secondary']"));
+        WebElement element= pd.SoldOrCart();
         String soldoutElement = element.getText();
         if (soldoutElement.contains("Sold out")){
             System.out.println("This product is Sold out");
         }else {
             element.click();
-            Thread.sleep(3000);
-            WebElement promtMessage = driver.findElement(By.xpath("//div[@class='cart-notification__header']"));
-            Assert.assertEquals(promtMessage.getText(), "Item added to your cart");
-            Thread.sleep(3000);
-            String cartCount = driver.findElement(By.xpath("//a[@id='cart-notification-button']")).getText();
-            Assert.assertEquals(cartCount, "View my cart (1)");
-
-            driver.findElement(By.xpath("//a[@id='cart-notification-button']")).click();
-            driver.findElement(By.xpath("//*[name()='svg' and @class='icon icon-remove']")).click();
-            String emptyMessgae = driver.findElement(By.xpath("//a[text()='Continue shopping']")).getText();
-            Assert.assertEquals(emptyMessgae, "Continue shopping");
+            wait.until(ExpectedConditions.visibilityOf(addtocartpopup.getSuccessmessage()));
+            Assert.assertEquals(addtocartpopup.getSuccessmessage().getText(), "Item added to your cart");
+            Assert.assertEquals(addtocartpopup.getcartnotification().getText(), "View my cart (1)");
+            addtocartpopup.getcartnotification().click();
+            cart.ProductDelete();
+            wait.until(ExpectedConditions.visibilityOf(cart.getEmptyText()));
+            Assert.assertEquals(cart.getEmptyText().getText(), "Your cart is empty");
         }
     }
 
