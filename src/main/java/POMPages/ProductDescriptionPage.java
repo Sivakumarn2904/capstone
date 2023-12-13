@@ -38,6 +38,9 @@ public class ProductDescriptionPage {
     @FindBy(xpath = "//h1[@class='product__title']")
     private WebElement productTitle;
 
+    @FindBy(xpath = "//input[@name='quantity']")
+    private WebElement productQuantity;
+
 
     public ProductDescriptionPage(WebDriver driver){
         PageFactory.initElements(driver,this);
@@ -46,7 +49,7 @@ public class ProductDescriptionPage {
     public void addToCart(){
         AddtocartButton.click();
     }
-    public String getProductname() throws InterruptedException  {
+    public String getProductname()  {
         return Productname.getText();
     }
     public WebElement SoldOrCart() {
@@ -54,5 +57,8 @@ public class ProductDescriptionPage {
     }
     public WebElement getProductTitle() {
         return productTitle;
+    }
+    public WebElement getProductQuantity() {
+        return productQuantity;
     }
 }

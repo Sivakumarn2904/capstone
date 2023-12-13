@@ -32,11 +32,11 @@ public class AddCartPopUp {
     public void ViewMyCart(){
         AddCart.click();
     }
-    public String Successmessage(){
-        return successmessage.getText();
+    public WebElement getSuccessmessage(){
+        return successmessage;
     }
-    public String cartnotification(){
-        return AddCart.getText();
+    public WebElement getcartnotification(){
+        return AddCart;
     }
 
 }

@@ -13,21 +13,13 @@ public class Add_Cart extends Baseclass {
     @Test
     public void velidateProductDeatialsPage() throws InterruptedException {
         String product =home.FirstProduct();
-       // WebElement product = driver.findElement(By.xpath("//a[contains(.,'12 Ti Xelium Skis')]"));
-        //String plpProductName = product.getText();
-       // product.click();
         String pdpname = pd.getProductname();
-       // String pdpProductName = driver.findElement(By.xpath("//h1[contains(.,'12 Ti Xelium Skis')]")).getText();
         Assert.assertEquals(product,pdpname);
     }
     @Test
     public void verifyProductAvailability() throws InterruptedException {
         home.FirstProduct();
-//        WebElement Productelements = driver.findElement(By.xpath("//a[contains(.,'12 Ti Xelium Skis')]"));
-//        wait.until(ExpectedConditions.visibilityOf(Productelements));
-//        Productelements.click();
         WebElement element=pd.SoldOrCart();
-//        WebElement element = driver.findElement(By.xpath("//button[@class='product-form__submit button button--full-width button--secondary']"));
         String soldoutElement = element.getText();
         if (soldoutElement.contains("Sold out")){
             System.out.println("This product is Sold out");
@@ -39,24 +31,19 @@ public class Add_Cart extends Baseclass {
     @Test
     public void verifyTheProductIsAdded() throws InterruptedException {
         WebElement Sname = home.Secondproduct();
-//        WebElement Productelements = driver.findElement(By.xpath("//a[contains(.,'15mm Combo Wrench')]"));
         wait.until(ExpectedConditions.elementToBeClickable(Sname));
         Sname.click();
         WebElement SoldOrCartbutton = pd.SoldOrCart();
         String soldoutElement=SoldOrCartbutton.getText();
-        //WebElement element = driver.findElement(By.xpath("//button[@class='product-form__submit button button--full-width button--secondary']"));
-        //String soldoutElement = element.getText();
         if (soldoutElement.contains("Sold out")){
             System.out.println("This product is Sold out");
         }else {
             SoldOrCartbutton.click();
-            Thread.sleep(3000);
-            String Successmessage = addtocartpopup.Successmessage();
-            //WebElement promtMessage = driver.findElement(By.xpath("//div[@class='cart-notification__header']"));
+            wait.until(ExpectedConditions.visibilityOf(addtocartpopup.getSuccessmessage()));
+            String Successmessage = addtocartpopup.getSuccessmessage().getText();
             Assert.assertEquals(Successmessage,"Item added to your cart"); // this is the code for validating items added to your cart
-            Thread.sleep(3000);
-            //String cartCount = driver.findElement(By.xpath("//a[@id='cart-notification-button']")).getText();
-            Assert.assertEquals(addtocartpopup.cartnotification(),"View my cart (1)");
+            wait.until(ExpectedConditions.visibilityOf(addtocartpopup.getcartnotification()));
+            Assert.assertEquals(addtocartpopup.getcartnotification().getText(),"View my cart (1)");
         }
     }
 
@@ -65,12 +52,10 @@ public class Add_Cart extends Baseclass {
     public void verifyTheCartDeatials() throws InterruptedException {
 
         WebElement  Productelements= home.Secondproduct();
-       // WebElement Productelements = driver.findElement(By.xpath("//a[contains(.,'15mm Combo Wrench')]"));
         String pname = Productelements.getText();
         wait.until(ExpectedConditions.visibilityOf(Productelements));
         Productelements.click();
         WebElement element=pd.SoldOrCart();
-        //WebElement element = driver.findElement(By.xpath("//button[@class='product-form__submit button button--full-width button--secondary']"));
         String soldoutElement = element.getText();
         if (soldoutElement.contains("Sold out")) {
             System.out.println("This product is Sold out");
@@ -78,26 +63,25 @@ public class Add_Cart extends Baseclass {
             wait.until(ExpectedConditions.elementToBeClickable(element));
             element.click();
             WebElement productName= pd.getProductTitle();
-           // WebElement productName = driver.findElement(By.xpath("//h1[@class='product__title']"));
+            String productQuantity=pd.getProductQuantity().getText();
             Assert.assertEquals(pname,productName.getText());
-            try{
-                wait.until(ExpectedConditions.alertIsPresent());
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-            WebElement carticon = driver.findElement(By.xpath("//a[@id='cart-icon-bubble']"));
-            wait.until(ExpectedConditions.elementToBeClickable(carticon));
-            carticon.click();
-
-            String ExpectPrice = driver.findElement(By.xpath("//td[@class='cart-item__totals right small-hide']/descendant::span")).getText();
-            String ActualPrice=driver.findElement(By.xpath("//h3[text()='Subtotal']/following-sibling::p")).getText();
-            String DiscountPrice=driver.findElement(By.xpath("//li[@class='discounts__discount discounts__discount--end']")).getText();
+            wait.until(ExpectedConditions.visibilityOf(addtocartpopup.getSuccessmessage()));
+            wait.until(ExpectedConditions.elementToBeClickable(home.addCartIconelement()));
+            home.addCartIcon();
+            Assert.assertTrue(cart.getCartPageTitle().isDisplayed());
+            Assert.assertTrue(cart.getProductName().isDisplayed(),cart.getProductName().getText());
+            Assert.assertEquals(productQuantity,cart.getProductQuantity().getText());
+            String ExpectPrice = cart.getExpectPrice().getText();
+            String ActualPrice= cart.getActualPrice().getText();
+            String DiscountPrice=cart.getDiscountPrice().getText();
             String[] exp = ExpectPrice.split(" ");
             String[] act = ActualPrice.split(" ");
             double expnu = Double.parseDouble(exp[1]);
             double actnu = Double.parseDouble(act[1]);
-            double discount = expnu - actnu;
-            Assert.assertTrue(DiscountPrice.contains(DiscountPrice+""));
+            double discount =  actnu - expnu ;
+            String discountprice = String.valueOf(discount);
+            String[] dis = discountprice.split(String.valueOf(0), 4);
+            Assert.assertTrue(DiscountPrice.contains(dis[1]));
         }
 
     }
