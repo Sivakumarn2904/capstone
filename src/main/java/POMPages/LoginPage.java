@@ -26,6 +26,9 @@ public class LoginPage {
     @FindBy(xpath = "//h3[@class='form__message']")
     private WebElement ErrorMessage;
 
+    @FindBy(xpath = "//a[contains(text(),'Create account')]")
+    private WebElement CreateAccountLink;
+
     public LoginPage(WebDriver driver){
         PageFactory.initElements(driver,this);
     }
@@ -40,5 +43,8 @@ public class LoginPage {
     }
     public WebElement getErrorMessage(){
         return ErrorMessage;
+    }
+    public WebElement getCreateAccountLink(){
+        return CreateAccountLink;
     }
 }

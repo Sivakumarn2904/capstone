@@ -32,6 +32,9 @@ public class HomePage {
 
     @FindBy(xpath = "//a[contains(.,'15mm Combo Wrench')]")
     private WebElement SecondProductName;
+
+    @FindBy(xpath = "//a[normalize-space()='16 Ti Skis']")
+    private WebElement ThirdProductName;
     public HomePage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
@@ -58,5 +61,8 @@ public class HomePage {
     }
     public WebElement Secondproduct() {
        return SecondProductName;
+    }
+    public WebElement Thirdproduct() {
+        return ThirdProductName;
     }
 }

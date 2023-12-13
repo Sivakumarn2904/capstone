@@ -2,6 +2,8 @@ package testcases;
 
 import GenericUtils.Baseclass;
 
+import GenericUtils.DriverFactory;
+import GenericUtils.Scroll;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -9,13 +11,18 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class Add_Cart extends Baseclass {
-
+    /**
+     * Here the verifying the product details page
+     */
     @Test
     public void velidateProductDeatialsPage() throws InterruptedException {
         String product =home.FirstProduct();
         String pdpname = pd.getProductname();
         Assert.assertEquals(product,pdpname);
     }
+    /**
+     * Here the verifying the product availability
+     */
     @Test
     public void verifyProductAvailability() throws InterruptedException {
         home.FirstProduct();
@@ -28,8 +35,11 @@ public class Add_Cart extends Baseclass {
         }
     }
 
+    /**
+     * Here the product is adding to the cart page
+     */
     @Test
-    public void verifyTheProductIsAdded() throws InterruptedException {
+    public void verifyTheProductIsAdded()  {
         WebElement Sname = home.Secondproduct();
         wait.until(ExpectedConditions.elementToBeClickable(Sname));
         Sname.click();
@@ -47,7 +57,9 @@ public class Add_Cart extends Baseclass {
         }
     }
 
-
+    /**
+     * Here the product cart details page
+     */
     @Test
     public void verifyTheCartDetails() {
 
@@ -104,6 +116,8 @@ public class Add_Cart extends Baseclass {
             cart.ProductDelete();
             wait.until(ExpectedConditions.visibilityOf(cart.getEmptyText()));
             Assert.assertEquals(cart.getEmptyText().getText(), "Your cart is empty");
+            DriverFactory.getInstance();
+
         }
     }
 

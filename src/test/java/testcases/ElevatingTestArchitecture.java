@@ -12,39 +12,38 @@ import java.io.IOException;
 
 public class ElevatingTestArchitecture extends Baseclass {
     @Test
-    public void addCart(){
+    public void addCart() {
         home.productClick();
-       pd.addToCart();
+        pd.addToCart();
         home.addCartIcon();
     }
 
-    @Test
-    public void CentralizeDriverManagement(){
-        DriverFactory driverfactory = new DriverFactory();
-        driverfactory.selectBrowser("chrome");
-    }
+//    @Test
+//    public void CentralizeDriverManagement() {
+//        DriverFactory driverfactory = new DriverFactory();
+//        driverfactory.selectBrowser("chrome");
+//    }
 
     @Test
     public void ActionClassesforTestSteps() throws InterruptedException {
 
         home.profileIcon();
-        login.LoginAccount("siva@gmail.com","Sivakumar");
+        login.LoginAccount("siva@gmail.com", "Sivakumar");
 
     }
 
     @Test
-    public void LoggingMechanism(){
-       try {
-           LogHelper.logInfo("Entering the method LoggingMechanism.");
-           home = new HomePage(driver);
-           home.profileIcon();
-           login = new LoginPage(driver);
-           login.LoginAccount("siva@gmail.com", "Sivakumar");
-           LogHelper.logInfo("Exiting the method LoggingMechanism.");
-       }catch (Exception e){
-           LogHelper.logError("An error occurred: " + e.getMessage());
-       }
+    public void LoggingMechanism() {
+        try {
+            LogHelper.logInfo("Entering the method LoggingMechanism.");
+            home.profileIcon();
+            login.LoginAccount("siva@gmail.com", "Sivakumar");
+            LogHelper.logInfo("Exiting the method LoggingMechanism.");
+        } catch (Exception e) {
+            LogHelper.logError("An error occurred: " + e.getMessage());
+        }
     }
+
     @Test
     public void DataDrivenTesting() throws IOException, ParseException {
         String Emailid = data.fetchData("emailId");
@@ -54,7 +53,7 @@ public class ElevatingTestArchitecture extends Baseclass {
             home.profileIcon();
             login.LoginAccount(Emailid, Password);
             LogHelper.logInfo("Exiting the method LoggingMechanism.");
-        }catch (Exception e){
+        } catch (Exception e) {
             LogHelper.logError("An error occurred: " + e.getMessage());
         }
     }

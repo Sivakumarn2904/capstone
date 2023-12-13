@@ -49,6 +49,15 @@ public class AccountPage {
     @FindBy(xpath = "//h2[text()='Order history']")
     private WebElement Title;
 
+    @FindBy(xpath = "//p[text()='Siva Kumar']")
+    private WebElement AccountName;
+
+    @FindBy(xpath = "//h1[text()='Account']/following-sibling::a")
+    private WebElement LogoutButton;
+
+    @FindBy(xpath = "//form[@id='create_customer']/input/following-sibling::h2")
+    private WebElement LoginErrorMessgae;
+
     public AccountPage(WebDriver driver){
         PageFactory.initElements(driver,this);
     }
@@ -91,5 +100,14 @@ public class AccountPage {
     }
     public WebElement getTitile(){
         return Title;
+    }
+    public WebElement getAccountName(){
+        return AccountName;
+    }
+    public void getLogout(){
+        LogoutButton.click();
+    }
+    public String ErrorMessage(){
+        return LoginErrorMessgae.getText();
     }
 }

@@ -22,22 +22,19 @@ public class ExpandingTestScenariosforComprehensiveCoverage extends Baseclass {
     @Test
     public void verifyUserRegistration() throws InterruptedException {
 
-//        HomePage home=new HomePage(driver);
         home.profileIcon();
         random = new Random();
         int numbers = random.nextInt(1000);
-        driver.findElement(By.xpath("//a[contains(text(),'Create account')]")).click();
+        login.getCreateAccountLink().click();
         Caccount.createAccount("Siva", "Kumar", "siva" + numbers + "@gmail.com", "Sivakumar");
         home.profileIcon();
-        String name = driver.findElement(By.xpath("//p[text()='Siva Kumar']")).getText();
+        String name = account.getAccountName().getText();
         Assert.assertEquals(name, "Siva Kumar");
-        driver.findElement(By.xpath("//h1[text()='Account']/following-sibling::a")).click();
-        Caccount = new CreateAccount(driver);
+        account.getLogout();
         home.profileIcon();
-        int numbers1 = random.nextInt(1000);
-        driver.findElement(By.xpath("//a[contains(text(),'Create account')]")).click();
+        login.getCreateAccountLink().click();
         Caccount.createAccount("", "", "", "");
-        String promtmessgae = driver.findElement(By.xpath("//form[@id='create_customer']/input/following-sibling::h2")).getText();
+        String promtmessgae= account.ErrorMessage();
         Assert.assertEquals(promtmessgae, "Please adjust the following:");
     }
 
@@ -50,7 +47,7 @@ public class ExpandingTestScenariosforComprehensiveCoverage extends Baseclass {
         search.getProducttype().click();
         wait.until(ExpectedConditions.elementToBeClickable(search.getSelect1producttype()));
         search.getSelect1producttype().click();
-        ((JavascriptExecutor) driver).executeScript("document.body.click();");
+        scroll.clickOutOff();
         String PName = search.SearchText();
         int number = 0;
         for (int i = 0; i < PName.length(); i++) {
@@ -64,30 +61,27 @@ public class ExpandingTestScenariosforComprehensiveCoverage extends Baseclass {
 
     @Test
     public void CartandCheckoutProcess() throws InterruptedException, IOException, ParseException {
-        WebElement Productelements = driver.findElement(By.xpath("//a[contains(.,'15mm Combo Wrench')]"));
+        WebElement Productelements = home.Secondproduct();
         wait.until(ExpectedConditions.visibilityOf(Productelements));
         Productelements.click();
-        WebElement element = driver.findElement(By.xpath("//button[@class='product-form__submit button button--full-width button--secondary']"));
+        WebElement element=pd.SoldOrCart();
         String soldoutElement = element.getText();
         if (soldoutElement.contains("Sold out")) {
             System.out.println("This product is Sold out");
         } else {
             element.click();
-            Thread.sleep(3000);
-            WebElement promtMessage = driver.findElement(By.xpath("//div[@class='cart-notification__header']"));
-            Assert.assertEquals(promtMessage.getText(), "Item added to your cart");
-            Thread.sleep(3000);
-            String cartCount = driver.findElement(By.xpath("//a[@id='cart-notification-button']")).getText();
-            Assert.assertEquals(cartCount, "View my cart (1)");
+            wait.until(ExpectedConditions.visibilityOf(addtocartpopup.getSuccessmessage()));
+            Assert.assertEquals(addtocartpopup.getSuccessmessage().getText(), "Item added to your cart");
+            Assert.assertEquals(addtocartpopup.getcartnotification().getText(), "View my cart (1)");
             addtocartpopup.countinueShopping();
             home.addCartIcon();
 
             cart.countinueShopping();
-            driver.findElement(By.xpath("//a[normalize-space()='16 Ti Skis']")).click();
+            home.Thirdproduct().click();
             pd.addToCart();
-            Thread.sleep(2000);
+            wait.until(ExpectedConditions.visibilityOf(addtocartpopup.getSuccessmessage()));
             addtocartpopup.ViewMyCart();
-            List<WebElement> ActualAmount = driver.findElements(By.xpath("//td[@class='cart-item__totals right small-hide']/descendant::span"));
+            List<WebElement> ActualAmount= cart.getActualPrices();
             double actnu = 0;
             for (WebElement price : ActualAmount) {
 
@@ -95,16 +89,16 @@ public class ExpandingTestScenariosforComprehensiveCoverage extends Baseclass {
                 String[] act = Actualprice.split(" ");
                 actnu += Double.parseDouble(act[1]);
             }
-            String ExpAmount = driver.findElement(By.xpath("//h3[text()='Subtotal']/following-sibling::p")).getText();
-            String DiscountAmount = driver.findElement(By.xpath("//li[@class='discounts__discount discounts__discount--end']")).getText();
+            String ExpAmount=cart.getExpectPrice().getText();
+            String DiscountAmount=cart.getDiscountPrice().getText();
 
             String[] exp = ExpAmount.split(" ");
             double expnu = Double.parseDouble(exp[1]);
             double dis = actnu - expnu;
             String discountprice = String.valueOf(dis);
             Assert.assertTrue(DiscountAmount.contains(discountprice));
-            WebElement checkoutButton = driver.findElement(By.xpath("//button[@id='checkout']"));
-            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", checkoutButton);
+            WebElement checkoutButton=cart.getCheckoutButton();
+            scroll.scrollIntoView(checkoutButton);
             wait.until(ExpectedConditions.elementToBeClickable(checkoutButton));
             checkoutButton.click();
 
@@ -112,7 +106,6 @@ public class ExpandingTestScenariosforComprehensiveCoverage extends Baseclass {
             String Password = data.fetchData("password");
             try {
                 LogHelper.logInfo("Entering the method LoggingMechanism.");
-                LoginPage login = new LoginPage(driver);
                 login.LoginAccount(Emailid, Password);
                 LogHelper.logInfo("Exiting the method LoggingMechanism.");
             } catch (Exception e) {
@@ -135,18 +128,14 @@ public class ExpandingTestScenariosforComprehensiveCoverage extends Baseclass {
         String Company = data.fetchData("company");
         account.editAddress(Firstname, Lastname, Company);
         account.updateButton();
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", account.updateButton());
+        scroll.scrollIntoView(account.updateButton());
         Assert.assertEquals(Firstname + " " + Lastname, account.getupdatedetails().contains(Firstname + " " + Lastname));
     }
 
     @Test
     public void OutofStockProducts() throws InterruptedException {
         home.FirstProduct();
-//        WebElement Productelements = driver.findElement(By.xpath("//a[contains(.,'12 Ti Xelium Skis')]"));
-//        wait.until(ExpectedConditions.visibilityOf(Productelements));
-//        Productelements.click();
         WebElement element = pd.SoldOrCart();
-//        WebElement element = driver.findElement(By.xpath("//button[@class='product-form__submit button button--full-width button--secondary']"));
         String soldoutElement = element.getText();
         if (soldoutElement.contains("Sold out")) {
             System.out.println("This product is Sold out");

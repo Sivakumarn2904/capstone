@@ -5,6 +5,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.List;
+
 public class CartPage {
 
     @FindBy(xpath = "//a[text()='Continue shopping']")
@@ -33,6 +35,9 @@ public class CartPage {
     @FindBy(xpath = "//h1[@class='cart__empty-text']")
     private WebElement EmptyText;
 
+    @FindBy(xpath = "//button[@id='checkout']")
+    private WebElement CheckoutButton;
+
     public CartPage(WebDriver driver){
         PageFactory.initElements(driver,this);
     }
@@ -42,6 +47,9 @@ public class CartPage {
     }
     public WebElement getActualPrice(){
         return ActualPrice;
+    }
+    public List<WebElement> getActualPrices(){
+        return (List<WebElement>) ActualPrice;
     }
     public WebElement getExpectPrice(){
         return ExceptPrice;
@@ -63,6 +71,9 @@ public class CartPage {
     }
     public WebElement getEmptyText() {
        return EmptyText;
+    }
+    public WebElement getCheckoutButton() {
+        return CheckoutButton;
     }
 
 }
