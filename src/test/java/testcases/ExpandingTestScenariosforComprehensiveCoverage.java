@@ -20,7 +20,7 @@ public class ExpandingTestScenariosforComprehensiveCoverage extends Baseclass {
     Random random;
 
     @Test
-    public void verifyUserRegistration() throws InterruptedException {
+    public void verifyUserRegistrationTest() throws InterruptedException {
 
         home.profileIcon();
         random = new Random();
@@ -39,7 +39,7 @@ public class ExpandingTestScenariosforComprehensiveCoverage extends Baseclass {
     }
 
     @Test
-    public void ProductSearchnadFiltering() throws InterruptedException, IOException, ParseException {
+    public void ProductSearchnadFilteringTest() throws InterruptedException, IOException, ParseException {
 
 
         search.Search(data.fetchData("productName"));
@@ -60,7 +60,7 @@ public class ExpandingTestScenariosforComprehensiveCoverage extends Baseclass {
     }
 
     @Test
-    public void CartandCheckoutProcess() throws InterruptedException, IOException, ParseException {
+    public void CartandCheckoutProcessTest() throws InterruptedException, IOException, ParseException {
         WebElement Productelements = home.Secondproduct();
         wait.until(ExpectedConditions.visibilityOf(Productelements));
         Productelements.click();
@@ -115,7 +115,7 @@ public class ExpandingTestScenariosforComprehensiveCoverage extends Baseclass {
     }
 
     @Test
-    public void profileUpdate() throws IOException, ParseException, InterruptedException {
+    public void profileUpdateTest() throws IOException, ParseException, InterruptedException {
         home.profileIcon();
         String Emailid = data.fetchData("emailId");
         String Password = data.fetchData("password");
@@ -133,7 +133,7 @@ public class ExpandingTestScenariosforComprehensiveCoverage extends Baseclass {
     }
 
     @Test
-    public void OutofStockProducts() throws InterruptedException {
+    public void OutofStockProductsTest() throws InterruptedException {
         home.FirstProduct();
         WebElement element = pd.SoldOrCart();
         String soldoutElement = element.getText();
@@ -145,7 +145,7 @@ public class ExpandingTestScenariosforComprehensiveCoverage extends Baseclass {
     }
 
     @Test
-    public void ForgotPassword() throws IOException, ParseException {
+    public void ForgotPasswordTest() throws IOException, ParseException {
         home.profileIcon();
         login.forgotpassword();
         String Emailid = data.fetchData("emailId");
@@ -156,7 +156,7 @@ public class ExpandingTestScenariosforComprehensiveCoverage extends Baseclass {
     }
 
     @Test
-    public void OrderHistoryandDetailsAccuracy() throws IOException, ParseException, InterruptedException {
+    public void OrderHistoryandDetailsAccuracyTest() throws IOException, ParseException, InterruptedException {
         home.profileIcon();
         String Emailid = data.fetchData("emailId");
         String Password = data.fetchData("password");
@@ -175,7 +175,7 @@ public class ExpandingTestScenariosforComprehensiveCoverage extends Baseclass {
     }
 
     @Test
-    public void SearchFunctionalitywithSpecialCharacters() throws IOException, ParseException, InterruptedException {//    %$^%$^$%QW$
+    public void SearchFunctionalitywithSpecialCharactersTest() throws IOException, ParseException, InterruptedException {//    %$^%$^$%QW$
 
         search.Search(data.fetchData("specialCharacterPname"));
         Assert.assertTrue(search.getErrorMessage().isDisplayed());

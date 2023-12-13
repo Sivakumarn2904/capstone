@@ -15,7 +15,7 @@ public class Add_Cart extends Baseclass {
      * Here the verifying the product details page
      */
     @Test
-    public void velidateProductDeatialsPage() throws InterruptedException {
+    public void velidateProductDeatialsPageTest() throws InterruptedException {
         String product =home.FirstProduct();
         String pdpname = pd.getProductname();
         Assert.assertEquals(product,pdpname);
@@ -24,7 +24,7 @@ public class Add_Cart extends Baseclass {
      * Here the verifying the product availability
      */
     @Test
-    public void verifyProductAvailability() throws InterruptedException {
+    public void verifyProductAvailabilityTest() throws InterruptedException {
         home.FirstProduct();
         WebElement element=pd.SoldOrCart();
         String soldoutElement = element.getText();
@@ -39,7 +39,7 @@ public class Add_Cart extends Baseclass {
      * Here the product is adding to the cart page
      */
     @Test
-    public void verifyTheProductIsAdded()  {
+    public void verifyTheProductIsAddedTest()  {
         WebElement Sname = home.Secondproduct();
         wait.until(ExpectedConditions.elementToBeClickable(Sname));
         Sname.click();
@@ -61,7 +61,7 @@ public class Add_Cart extends Baseclass {
      * Here the product cart details page
      */
     @Test
-    public void verifyTheCartDetails() {
+    public void verifyTheCartDetailsTest() {
 
         WebElement  Productelements= home.Secondproduct();
         String pname = Productelements.getText();
@@ -99,7 +99,7 @@ public class Add_Cart extends Baseclass {
     }
 
     @Test
-    public void verifyTheProductRemoveFromCart() throws InterruptedException {
+    public void verifyTheProductRemoveFromCartTest() throws InterruptedException {
         WebElement Productelements =home.Secondproduct();
         wait.until(ExpectedConditions.visibilityOf(Productelements));
         Productelements.click();
